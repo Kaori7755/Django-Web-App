@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+{% load rango_template_tags %}
+<script src="{% static "js/jquery-3.3.1.min.js" %}" crossorigin="anonymous"></script>
+<script src="{% static "js/rango-ajax.js" %}"></script>
+<script src="{% static "js/rango-jquery.js" %}" crossorigin="anonymous"></script>
+
+<html>
+    <head lang="en">
+        <meta charset="UTF-8" />
+        <title>
+            Rango -
+            {% block title_block %}
+                How to Tango with Django!
+            {% endblock %}
+        </title>
+        <link rel="stylesheet" type="text/css" href="{% static "CSS/mystyle.css" %}">
+       
+    </head>
+    <body class="body1">
+        <h1>Rango says...</h1>
+        <div id="header">
+            {% if user.is_authenticated %}
+                howdy {{ user.username }}!
+            {% else %}    
+            hey there partner! 
+            {% endif %}
+            <br/>
+            <strong style="font-size:10px;">{{ boldmessage }}</strong>
+        </div>
+        <div>
+            <ul class="breadcrumb">
+                <li><a href="{% url 'rango:index' %}">Home</a></li>
+                <li><a href="{% url 'rango:all_categories' %}">All Categories</a></li>
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'auth_logout' %}?next={% url 'rango:index' %}">Logout</a></li> 
+            {% else %}    
+                <li><a href="{% url 'auth_login' %}">Login</a></li>
+                <li><a href="{% url 'registration_register' %}">Sign Up</a></li>
+            {% endif %}             
+                <li><a href="{% url 'rango:about' %}">About Us</a></li>
+                <li><a href="{% url 'rango:about_rango' %}">About Rango</a></li>
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'rango:profile' user.username %}"><img id="picture" src="{% static "images/profile.jpg" %}"></a></li>
+            {% endif %}             
+
+                
+                
+            </ul>
+            <div class="search-bar">
+                <form method="post"
+                action="{% url 'rango:search' %}">
+                {% csrf_token %}
+                    <input type="text" placeholder="Please type what you what to search..." name="query">
+                    <button type="submit" name="submit"></button>
+                </form>
+            </div>
+           
+        </div>
+        <div>
+        {% block body_block %}
+        
+        {% endblock %}
+        </div>
+        
+        

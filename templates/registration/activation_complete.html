@@ -1,0 +1,12 @@
+{% extends 'rango/log_base.html' %}
+
+
+{% block body_block %}
+<div class="box">
+
+<h1>Account activation complete</h1>
+<p>Congratulations! Your account is now activated.</p>
+   <p>You are now able to leave comments, like a page, add a category, and more!</p>
+   <p>Create your user profile<a href="{% url 'rango:register_profile' %}"> here!</a></p>
+</div>
+   {% endblock %}

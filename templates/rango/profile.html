@@ -1,0 +1,40 @@
+{% extends 'rango/log_base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Profile for {{ selected_user.username }}
+{% endblock %}
+
+{% block body_block %}
+
+        <div class="box">          
+            <h1>{{ selected_user.username }}'s Profile</h1>
+           <img src="{{ MEDIA_URL }}{{ user_profile.picture }}"
+            width="300"
+            height="300"                       
+            alt="{{ selected_user.username }}'s profile image" />
+            {% if selected_user == user %}
+            <form method="post" action="." enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+
+                <input type="submit" value="Update" />
+            </form>
+            {% else %}
+            <p>
+                <strong>Website:</strong>
+                <a href="{{ user_profile.website }}">{{ user_profile.website }}</a>
+            </p>
+            {% endif %}
+            <br/>
+            <form>
+                <input type="button" value="Change Passwords" onclick="window.location.href='http://127.0.0.1:8000/accounts/password/change/'"/>
+            </form>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+
+{% endblock %}
